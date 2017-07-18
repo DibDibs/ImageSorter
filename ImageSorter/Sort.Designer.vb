@@ -28,6 +28,7 @@ Partial Class Sort
         Me.ImageDisplay = New System.Windows.Forms.PictureBox()
         Me.DuplicateCheckBox = New System.Windows.Forms.CheckBox()
         Me.FinishBtn = New System.Windows.Forms.Button()
+        Me.ImageNumberLabel = New System.Windows.Forms.Label()
         CType(Me.ImageDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -107,11 +108,22 @@ Partial Class Sort
         Me.FinishBtn.Text = "Finish"
         Me.FinishBtn.UseVisualStyleBackColor = True
         '
+        'ImageNumberLabel
+        '
+        Me.ImageNumberLabel.AutoSize = True
+        Me.ImageNumberLabel.Font = New System.Drawing.Font("Arial", 8.75!)
+        Me.ImageNumberLabel.Location = New System.Drawing.Point(579, 525)
+        Me.ImageNumberLabel.Name = "ImageNumberLabel"
+        Me.ImageNumberLabel.Size = New System.Drawing.Size(68, 15)
+        Me.ImageNumberLabel.TabIndex = 7
+        Me.ImageNumberLabel.Text = "Image 0 / 0"
+        '
         'Sort
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1264, 681)
+        Me.Controls.Add(Me.ImageNumberLabel)
         Me.Controls.Add(Me.FinishBtn)
         Me.Controls.Add(Me.DuplicateCheckBox)
         Me.Controls.Add(Me.ImageDisplay)
@@ -132,4 +144,5 @@ Partial Class Sort
     Friend WithEvents ImageDisplay As PictureBox
     Friend WithEvents DuplicateCheckBox As CheckBox
     Friend WithEvents FinishBtn As Button
+    Friend WithEvents ImageNumberLabel As Label
 End Class

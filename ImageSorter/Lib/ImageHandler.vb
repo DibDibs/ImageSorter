@@ -43,10 +43,15 @@ Public Class ImageHandler
     End Sub
 
     Public Shared Function CheckForExisting(ByVal dict As Dictionary(Of Integer, ImageHandler),
-                                ByVal idToCheck As Integer) As Boolean
+                                ByVal idToCheck As Integer,
+                                            ByVal Optional pathToCheck As String = Nothing) As Boolean
 
         For Each kvp As KeyValuePair(Of Integer, ImageHandler) In dict
             If (idToCheck = kvp.Value.ID) Then
+                Return True
+            End If
+
+            If (pathToCheck IsNot Nothing And kvp.Value.path = pathToCheck) Then
                 Return True
             End If
         Next

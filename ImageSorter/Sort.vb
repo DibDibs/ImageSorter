@@ -5,20 +5,8 @@
     Dim n As Integer = 0
     Public dups As Integer
 
-    Private Sub Sort_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim imgDispXSize As Integer = CInt((2 / 3) * (Me.Size.Width))
-        Dim imgDispYSize As Integer = CInt((2 / 3) * (Me.Size.Height))
-
-        ImageDisplay.Size = New Size(imgDispXSize, imgDispYSize)
-        Util.CenterObjectInX(ImageDisplay)
-        Util.CenterObjectInX(PathLabel)
-    End Sub
-
-    Private Sub Sort_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
-        files = ApplySettings.sortedFiles
-
-        'Load first image
-        If (ImageHandler.CheckForExisting(images, n)) Then
+    Private Sub DoImageStuff()
+        If (ImageHandler.CheckForExisting(images, n, files(n))) Then
             Debug.WriteLine(images(n).isDuplicate)
             img = images(n)
 
@@ -34,6 +22,23 @@
         img.ShowImage(files(n))
     End Sub
 
+    Private Sub Sort_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim imgDispXSize As Integer = CInt((2 / 3) * (Me.Size.Width))
+        Dim imgDispYSize As Integer = CInt((2 / 3) * (Me.Size.Height))
+
+        ImageDisplay.Size = New Size(imgDispXSize, imgDispYSize)
+        Util.CenterObjectInX(ImageDisplay)
+        Util.CenterObjectInX(PathLabel)
+        Util.CenterObjectInX(ImageNumberLabel)
+    End Sub
+
+    Private Sub Sort_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        files = ApplySettings.sortedFiles
+
+        'Load first image
+        Me.DoImageStuff()
+    End Sub
+
     Private Sub Sort_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
         Dim imgDispXSize As Integer = CInt((2 / 3) * (Me.Size.Width))
         Dim imgDispYSize As Integer = CInt((2 / 3) * (Me.Size.Height))
@@ -41,25 +46,17 @@
         ImageDisplay.Size = New Size(imgDispXSize, imgDispYSize)
         Util.CenterObjectInX(ImageDisplay)
         Util.CenterObjectInX(PathLabel)
+        Util.CenterObjectInX(ImageNumberLabel)
     End Sub
 
     Private Sub FwdBtn_Click(sender As Object, e As EventArgs) Handles FwdBtn.Click
         If (n < files.Count - 1) Then
             n += 1
 
-            If (ImageHandler.CheckForExisting(images, n)) Then
-                img = images(n)
+            Me.DoImageStuff()
 
-            Else
-                img = New ImageHandler(ImageDisplay,
-                                   PathLabel,
-                                   DuplicateCheckBox)
-
-                img.AssignID(n)
-                images.Add(n, img)
-            End If
-
-            img.ShowImage(files(n))
+            ImageNumberLabel.Text = "Image " & n + 1 & " / " & files.Count
+            Util.CenterObjectInX(ImageNumberLabel)
 
             BackBtn.Enabled = True
 
@@ -73,20 +70,10 @@
         If (n > 0) Then
             n -= 1
 
-            If (ImageHandler.CheckForExisting(images, n)) Then
-                Debug.WriteLine(images(n).isDuplicate)
-                img = images(n)
+            Me.DoImageStuff()
 
-            Else
-                img = New ImageHandler(ImageDisplay,
-                                       PathLabel,
-                                       DuplicateCheckBox)
-
-                img.AssignID(n)
-                images.Add(n, img)
-            End If
-
-            img.ShowImage(files(n))
+            ImageNumberLabel.Text = "Image " & n + 1 & " / " & files.Count
+            Util.CenterObjectInX(ImageNumberLabel)
 
             FwdBtn.Enabled = True
 
